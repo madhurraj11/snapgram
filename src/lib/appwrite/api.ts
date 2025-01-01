@@ -22,7 +22,7 @@ export async function createUserAccount(user: INewUser){
             name: newAccount.name,
             email: newAccount.email,
             username: user.username,
-            imageUrl: avatarUrl,
+            imageUrl: new URL(avatarUrl),
           });
        
         return newUser; 
@@ -178,14 +178,16 @@ export async function uploadFile(file: File) {
 }
 
 // ============================== GET FILE URL
+
 export function getFilePreview(fileId: string) {
+  
   try {
     const fileUrl = storage.getFilePreview(
       appwriteConfig.storageId,
       fileId,
       2000,
       2000,
-      "top",
+      "top" as any,
       100
     );
 
@@ -272,7 +274,7 @@ export async function updatePost(post: IUpdatePost) {
 
   try {
     let image = {
-      imageUrl: post.imageUrl,
+      imageUrl: new URL(post.imageUrl),
       imageId: post.imageId,
     };
 
@@ -287,8 +289,7 @@ export async function updatePost(post: IUpdatePost) {
         await deleteFile(uploadedFile.$id);
         throw Error;
       }
-
-      image = { ...image, imageUrl: fileUrl, imageId: uploadedFile.$id };
+      image = { ...image, imageUrl: new URL(fileUrl), imageId: uploadedFile.$id };
     }
 
     // Convert tags into array
@@ -508,8 +509,8 @@ export async function updateUser(user: IUpdateUser) {
         await deleteFile(uploadedFile.$id);
         throw Error;
       }
+      image = { ...image, imageUrl: new URL(fileUrl), imageId: uploadedFile.$id };
 
-      image = { ...image, imageUrl: fileUrl, imageId: uploadedFile.$id };
     }
 
     //  Update user
