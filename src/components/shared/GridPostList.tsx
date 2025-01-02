@@ -47,7 +47,7 @@ const GridPostList = ({
                     className="w-8 h-8 rounded-full"
                   />
                   <p className="line-clamp-1">
-                    {post.creator.name || "Unknown User"}
+                    {post.creator.name}
                   </p>
                 </div>
               )}
