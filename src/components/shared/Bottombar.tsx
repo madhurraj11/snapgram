@@ -1,3 +1,4 @@
+// This is the bottom bar component
 import { bottombarLinks } from "@/constants";
 import { Link, useLocation } from "react-router-dom";
 
